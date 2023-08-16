@@ -99,3 +99,12 @@ feature_list=[ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,
               data1['Dependents'][3],get_value(Education,edu),get_fvalue(Self_Employed),
               data1['Property_Area'][0],data1['Property_Area'][1],data1['Property_Area'][2]]    
 single_sample = np.array(feature_list).reshape(1,-1)
+
+if st.button("Predict"):
+    loaded_model = pickle.load(open('loan_model_RF.sav', 'rb'))        
+    prediction = loaded_model.predict(single_sample)        
+    if prediction[0] == 0 :            
+        st.error(    'According to our Calculations, you will not get the loan from Bank'    )            
+        # st.markdown(    f'<img src="data:image/gif;base64,{data_url_no}" alt="cat gif">',    unsafe_allow_html=True,)        
+    elif prediction[0] == 1 :            
+        st.success(    'Congratulations!! you will get the loan from Bank'    )  
